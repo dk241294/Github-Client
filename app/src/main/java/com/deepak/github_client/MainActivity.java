@@ -16,14 +16,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         loadLoginFragment();
+
     }
 
 
     public void loadLoginFragment() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.container, new LoginFragment(), LoginFragment.TAG);
-        ft.addToBackStack(null);
         ft.commit();
 
     }
+    public void loadUsersFragment(){
+        FragmentTransaction ft =getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container,new UserFragment(),UserFragment.TAG);
+        ft.addToBackStack(LoginFragment.TAG);
+        ft.commit();
+
+    }
+
 }
