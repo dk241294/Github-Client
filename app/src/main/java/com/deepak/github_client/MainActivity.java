@@ -34,4 +34,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void loadRepositoryFragment() {
+        FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.container,new RepositoryFragment(),RepositoryFragment.TAG);
+        ft.addToBackStack(UserFragment.TAG);
+        ft.commit();
+
+    }
 }
