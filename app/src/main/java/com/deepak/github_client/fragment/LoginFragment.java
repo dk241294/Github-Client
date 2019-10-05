@@ -1,4 +1,4 @@
-package com.deepak.github_client;
+package com.deepak.github_client.fragment;
 
 
 import android.os.Bundle;
@@ -11,11 +11,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.deepak.github_client.MainActivity;
+import com.deepak.github_client.R;
+
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
     public static final String TAG = LoginFragment.class.getSimpleName();
     Button loginbtn;
     EditText userNameet;
+    String userName;
 
 
     public LoginFragment() {
@@ -36,8 +40,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+       userName =userNameet.getText().toString().trim();
         MainActivity activity = (MainActivity) getActivity();
-        if(activity!=null){
+        if(userName!=null){
             activity.loadUsersFragment();
         }
 
