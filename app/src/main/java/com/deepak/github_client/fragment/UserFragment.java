@@ -94,17 +94,17 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                 } else {
                     Picasso.get().load(userResponse.getAvatarUrl()).into(userImg);
                     if (userResponse.getName() == null) {
-                        userNameTxt.setText("No name provided");
+                        userNameTxt.setText("No Name Provided");
                     } else {
                         userNameTxt.setText("Username: " + userResponse.getName());
                     }
                     followersTxt.setText("Followers: " + userResponse.getFollowers());
                     followingTxt.setText("Following: " + userResponse.getFollowing());
-                    reposTxt.setText("Repoitories count: " + userResponse.getPublicRepos());
+                    reposTxt.setText("Repoitories Count: " + userResponse.getPublicRepos());
                     if (userResponse.getEmail() == null) {
-                        emailTxt.setText("No email id provided");
+                        emailTxt.setText("No Email Id Provided");
                     } else {
-                        emailTxt.setText("email: "+userResponse.getEmail());
+                        emailTxt.setText("Email: "+userResponse.getEmail());
                     }
                     loginTxt.setText("Login: "+userResponse.getLogin());
 
