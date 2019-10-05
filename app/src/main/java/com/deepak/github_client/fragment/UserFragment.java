@@ -12,8 +12,10 @@ import android.view.ViewGroup;
 import android.view.textclassifier.TextClassification;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,6 +26,10 @@ import com.android.volley.toolbox.Volley;
 import com.deepak.github_client.MainActivity;
 import com.deepak.github_client.R;
 import com.deepak.github_client.constants.Constant;
+import com.deepak.github_client.model.User;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.squareup.picasso.Picasso;
 
 public class UserFragment extends Fragment implements View.OnClickListener {
     public static final String TAG = UserFragment.class.getSimpleName();
@@ -36,6 +42,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     TextView followingTxt;
     TextView emailTxt;
     Button repoButton;
+    LinearLayout linearLayout;
     RequestQueue queue;
 
 
@@ -50,7 +57,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         ui(view);
 
-        sendRecieveResponse("https://api.github.com/users");
+        sendRecieveResponse("https://api.github.com/users/dk241294");
         return view;
     }
 
@@ -75,11 +82,42 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: " + response);
+                GsonBuilder builder = new GsonBuilder();
+                Gson gson = builder.create();
+                User userResponse = gson.fromJson(response, User.class);
+
+                progressBar.setVisibility(View.GONE);
+                if (userResponse == null) {
+                    linearLayout.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(), "please enter valid username", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Picasso.get().load(userResponse.getAvatarUrl()).into(userImg);
+                    if (userResponse.getName() == null) {
+                        userNameTxt.setText("No name provided");
+                    } else {
+                        userNameTxt.setText("Username: " + userResponse.getName());
+                    }
+                    followersTxt.setText("Followers: " + userResponse.getFollowers());
+                    followingTxt.setText("Following: " + userResponse.getFollowing());
+                    reposTxt.setText("Repoitories count: " + userResponse.getPublicRepos());
+                    if (userResponse.getEmail() == null) {
+                        emailTxt.setText("No email id provided");
+                    } else {
+                        emailTxt.setText("email: "+userResponse.getEmail());
+                    }
+                    loginTxt.setText("Login: "+userResponse.getLogin());
+
+                }
+
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressBar.setVisibility(View.GONE);
+                linearLayout.setVisibility(View.GONE);
+                Toast.makeText(getActivity(), "error ocur in fetching data", Toast.LENGTH_SHORT).show();
 
             }
         });
