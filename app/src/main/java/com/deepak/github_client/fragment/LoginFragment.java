@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.deepak.github_client.MainActivity;
 import com.deepak.github_client.R;
@@ -19,7 +20,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public static final String TAG = LoginFragment.class.getSimpleName();
     Button loginbtn;
     EditText userNameet;
-    String userName;
+    static String userName;
 
 
     public LoginFragment() {
@@ -43,7 +44,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
        userName =userNameet.getText().toString().trim();
         MainActivity activity = (MainActivity) getActivity();
         if(userName!=null){
-            activity.loadUsersFragment();
+            activity.loadUsersFragment(userName);
+        }
+        else{
+            Toast.makeText(getActivity(), "please provide username", Toast.LENGTH_SHORT).show();
         }
 
     }

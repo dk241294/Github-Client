@@ -14,18 +14,14 @@ import com.deepak.github_client.model.Repo;
 
 import java.util.List;
 
-public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder> {
+public class RepositoryAdapter extends RecyclerView.Adapter<RepositoryAdapter.ViewHolder> {
     List<Repo> repo;
 
 
-    public RepoAdapter(List<Repo> repo) {
+    public RepositoryAdapter(List<Repo> repo) {
         this.repo = repo;
     }
 
-    public void setRepo(List<Repo> repo) {
-        this.repo = repo;
-        notifyDataSetChanged();
-    }
 
     @NonNull
     @Override
@@ -52,8 +48,9 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return repo.size();
+        return repo != null ? repo.size() : 0;
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameTxt, languageTxt, watcherTxt, cloneTxt, createdAtTxt, descriptionTxt;
@@ -71,4 +68,10 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoAdapter.ViewHolder> {
 
         }
     }
+
+    public void setRepo(List<Repo> repo) {
+        this.repo = repo;
+        notifyDataSetChanged();
+    }
+}
 

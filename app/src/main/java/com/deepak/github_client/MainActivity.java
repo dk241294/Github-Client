@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         ft.commit();
 
     }
-    public void loadUsersFragment(){
+    public void loadUsersFragment(String username){
         FragmentTransaction ft =getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container,new UserFragment(),UserFragment.TAG);
         ft.addToBackStack(LoginFragment.TAG);

@@ -47,6 +47,7 @@ public class UserFragment extends Fragment implements View.OnClickListener {
 
 
     public UserFragment() {
+
         // Required empty public constructor
     }
 
@@ -57,7 +58,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
         ui(view);
 
-        sendRecieveResponse("https://api.github.com/users/dk241294");
+            sendRecieveResponse(Constant.USERS,LoginFragment.userName);
+
+
         return view;
     }
 
@@ -77,7 +80,8 @@ public class UserFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    public void sendRecieveResponse(String url) {
+    public void sendRecieveResponse(String baseurl,String username) {
+        String url=Constant.BASE_URL+username;
         StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -104,9 +108,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
                     if (userResponse.getEmail() == null) {
                         emailTxt.setText("No Email Id Provided");
                     } else {
-                        emailTxt.setText("Email: "+userResponse.getEmail());
+                        emailTxt.setText("Email: " + userResponse.getEmail());
                     }
-                    loginTxt.setText("Login: "+userResponse.getLogin());
+                    loginTxt.setText("Login: " + userResponse.getLogin());
 
                 }
 
@@ -116,8 +120,9 @@ public class UserFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progressBar.setVisibility(View.GONE);
-                linearLayout.setVisibility(View.GONE);
+
                 Toast.makeText(getActivity(), "error ocur in fetching data", Toast.LENGTH_SHORT).show();
+
 
             }
         });
